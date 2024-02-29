@@ -6,6 +6,12 @@ const getAllCustomers = () => {
   return dbPool.execute(SQLQuery);
 };
 
+const getCustomerById = (customerId) => {
+  const SQLQuery = `SELECT * FROM customers WHERE id = ${customerId}`;
+
+  return dbPool.execute(SQLQuery);
+};
+
 const createNewCustomer = (body) => {
   const SQLQuery = `INSERT INTO customers (name, level, total_transaction) VALUES ('${body.name}', '${body.level}', '${body.total_transaction}')`;
 
@@ -24,8 +30,16 @@ const deleteCustomer = (customerId) => {
   return dbPool.execute(SQLQuery);
 };
 
+const addMenuToFavorite = (customerId, menuId) => {
+  const SQLQuery = `UPDATE customers SET favorite_menu_id = '${menuId}' WHERE id = '${customerId}'`;
+
+  return dbPool.execute(SQLQuery);
+};
+
 module.exports = {
   getAllCustomers,
+  getCustomerById,
+  addMenuToFavorite,
   createNewCustomer,
   updateCustomer,
   deleteCustomer,

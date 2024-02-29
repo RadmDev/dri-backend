@@ -2,6 +2,7 @@ require("dotenv").config();
 const express = require("express");
 const customerRoutes = require("./routes/customers");
 const menuRoutes = require("./routes/menu");
+const topMenuRoutes = require("./routes/topMenu");
 const cors = require("cors");
 
 const app = express();
@@ -16,6 +17,7 @@ app.use(express.json());
 // routes
 app.use("/customers", customerRoutes);
 app.use("/menu", menuRoutes);
+app.use("/topMenu", topMenuRoutes);
 
 app.listen(PORT, () => {
   console.log(`Server berhasil dijalankan pada port ${PORT}`);

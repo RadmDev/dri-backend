@@ -16,6 +16,24 @@ const getAllMenu = async (req, res) => {
   }
 };
 
+const getMenuById = async (req, res) => {
+  const { menuId } = req.params;
+
+  try {
+    const [data] = await MenuModel.getMenuById(menuId);
+
+    res.json({
+      message: "GET menu success",
+      data: data,
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: "Internal server error",
+      serverMessage: error,
+    });
+  }
+};
+
 const createNewMenu = async (req, res) => {
   const { body } = req;
 
@@ -66,9 +84,44 @@ const deleteMenu = async (req, res) => {
   }
 };
 
+const addMenuLike = async (req, res) => {
+  const { menuId } = req.params;
+
+  try {
+    await MenuModel.addMenuLike(menuId);
+    res.json({
+      message: "Add menu like success",
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: "Internal server error",
+      serverMessage: error,
+    });
+  }
+};
+
+const getTopMenu = async (req, res) => {
+  try {
+    const [data] = await MenuModel.getTopMenu();
+
+    res.json({
+      message: "GET top menu success",
+      data: data,
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: "Internal server error",
+      serverMessage: error,
+    });
+  }
+};
+
 module.exports = {
   getAllMenu,
+  getMenuById,
+  getTopMenu,
   createNewMenu,
   updateMenu,
   deleteMenu,
+  addMenuLike,
 };

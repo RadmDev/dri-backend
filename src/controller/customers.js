@@ -16,6 +16,24 @@ const getAllCustomers = async (req, res) => {
   }
 };
 
+const getCustomerById = async (req, res) => {
+  const { customerId } = req.params;
+
+  try {
+    const [data] = await CustomersModel.getCustomerById(customerId);
+
+    res.json({
+      message: "GET customer success",
+      data: data,
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: "Internal server error",
+      serverMessage: error,
+    });
+  }
+};
+
 const createNewCustomer = async (req, res) => {
   const { body } = req;
 
@@ -66,9 +84,28 @@ const deleteCustomer = async (req, res) => {
   }
 };
 
+const addMenuToFavorite = async (req, res) => {
+  const { customerId } = req.params;
+  const { menuId } = req.body;
+
+  try {
+    await CustomersModel.addMenuToFavorite(customerId, menuId);
+    res.json({
+      message: "Add menu to favorite success",
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: "Internal server error",
+      serverMessage: error,
+    });
+  }
+};
+
 module.exports = {
   getAllCustomers,
+  getCustomerById,
   createNewCustomer,
   updateCustomer,
   deleteCustomer,
+  addMenuToFavorite,
 };
